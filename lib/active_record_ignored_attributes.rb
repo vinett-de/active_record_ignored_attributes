@@ -15,7 +15,7 @@ module ActiveRecordIgnoredAttributes
   end
 
   def attributes_without_ignored_attributes(options = {})
-    attributes = if options[:only]
+    considered_attributes = if options[:only]
       options[:only]
     elsif options[:except]
       self.class.ignored_attributes - options[:except]
@@ -23,7 +23,7 @@ module ActiveRecordIgnoredAttributes
       self.class.ignored_attributes
     end
     
-    attributes.except(*attributes.map(&:to_s))
+    attributes.except(*considered_attributes.map(&:to_s))
   end
 
 end
